@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "yanp"
+name = "tcp-proxy-b"
 version = "0.1.0"
