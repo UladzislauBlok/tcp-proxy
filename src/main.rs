@@ -1,3 +1,5 @@
+mod socket_channel;
+
 use std::{
     io::Read,
     net::{SocketAddr, TcpListener, TcpStream},
@@ -5,7 +7,7 @@ use std::{
 
 fn handle_client((mut stream, addr): (TcpStream, SocketAddr)) -> std::io::Result<()> {
     println!("Read bytes from {addr}");
-    let mut buf: Vec<u8> = vec![];
+    let mut buf: Vec<u8> = Vec::new();
     loop {
         let mut tmp_buf = [0u8; 1024];
         match stream.read(&mut tmp_buf) {
@@ -15,15 +17,20 @@ fn handle_client((mut stream, addr): (TcpStream, SocketAddr)) -> std::io::Result
             }
             Ok(bytes) => {
                 println!("Read {bytes} bytes");
-                buf.extend_from_slice(&tmp_buf);
+                buf.extend_from_slice(&tmp_buf[..bytes]);
             }
             Err(e) => {
                 return Err(e);
             }
         }
     }
-    let input = String::from_utf8(buf).unwrap();
-    println!("{input}");
+    println!(
+        "{}",
+        buf.iter()
+            .map(|b| format!("{b:02x}").to_string())
+            .collect::<Vec<String>>()
+            .join(" ")
+    );
     println!("Close connection");
     stream.shutdown(std::net::Shutdown::Both)?;
     Ok(())
