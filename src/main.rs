@@ -7,7 +7,7 @@ use std::{
 
 fn handle_client((mut stream, addr): (TcpStream, SocketAddr)) -> std::io::Result<()> {
     println!("Read bytes from {addr}");
-    let mut buf: Vec<u8> = Vec::new();
+    let mut count = 0;
     loop {
         let mut tmp_buf = [0u8; 1024];
         match stream.read(&mut tmp_buf) {
@@ -16,21 +16,23 @@ fn handle_client((mut stream, addr): (TcpStream, SocketAddr)) -> std::io::Result
                 break;
             }
             Ok(bytes) => {
-                println!("Read {bytes} bytes");
-                buf.extend_from_slice(&tmp_buf[..bytes]);
+                count += 1;
+                println!("Read {bytes} bytes; {count}");
+
+                println!(
+                    "{}",
+                    &tmp_buf[..bytes]
+                        .iter()
+                        .map(|b| format!("{b:02x}").to_string())
+                        .collect::<Vec<String>>()
+                        .join(" ")
+                );
             }
             Err(e) => {
                 return Err(e);
             }
         }
     }
-    println!(
-        "{}",
-        buf.iter()
-            .map(|b| format!("{b:02x}").to_string())
-            .collect::<Vec<String>>()
-            .join(" ")
-    );
     println!("Close connection");
     stream.shutdown(std::net::Shutdown::Both)?;
     Ok(())

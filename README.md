@@ -23,3 +23,10 @@ The complete development roadmap is detailed in the separate file: [development_
 
 - Cargo: 1.88.0
 - Rust: 1.88.0
+- Netcat: 1.234 (for testing)
+
+### Test in server mode
+
+1. Generate random data: head -c 100K /dev/urandom > 100k.dat
+2. Run proxy: cargo run
+3. Send data: cat 100k.dat | nc 127.0.0.1 8085
