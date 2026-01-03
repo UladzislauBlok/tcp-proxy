@@ -1,3 +1,0 @@
-struct SocketChannel {}
-
-impl SocketChannel {}

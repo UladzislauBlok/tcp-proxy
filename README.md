@@ -1,32 +1,3 @@
-# Simple TCP Proxy
+# TCP something
 
-A lightweight, high-performance TCP proxy developed as a personal project. This tool is being built to handle generic TCP connections, focusing on concurrency, reliability, and advanced features like TLS handling and traffic management.
-
----
-
-## Overview
-
-This project is a multi-phased effort to create a production-ready proxy. Key features include:
-
-- Bidirectional data forwarding.
-- Dedicated Command-Line Interface (CLI) for visibility and management.
-- Transition to an asynchronous (async) architecture for high performance.
-- Support for TLS termination and traffic throttling (rate limiting).
-
-The complete development roadmap is detailed in the separate file: [development_plan.md](/doc/plan.md)
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Cargo: 1.88.0
-- Rust: 1.88.0
-- Netcat: 1.234 (for testing)
-
-### Test in server mode
-
-1. Generate random data: head -c 100K /dev/urandom > 100k.dat
-2. Run proxy: cargo run
-3. Send data: cat 100k.dat | nc 127.0.0.1 8085
+l4 or l7
